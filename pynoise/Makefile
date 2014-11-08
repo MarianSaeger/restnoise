@@ -1,6 +1,6 @@
 PYTHON_INCLUDE = `python -c 'from distutils import sysconfig; print sysconfig.get_python_inc()'`
 PYTHON_DEST =`python -c 'from distutils import sysconfig; print sysconfig.get_python_lib()'`
-LIBNOISE_INCLUDE = /usr/local/include/noise/
+LIBNOISE_INCLUDE = /usr/local/include/
 
 CXX=g++
 CXXFLAGS=$(cflags) -fPIC

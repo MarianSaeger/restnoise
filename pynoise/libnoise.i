@@ -24,7 +24,7 @@
 %include "stl.i"
 %{
 #include <stdlib.h>
-#include <noise.h>
+#include <noise/noise.h>
 #include "noiseutils.h"
 #include <execinfo.h>
 %}
@@ -544,6 +544,11 @@ virtual double GetValue (double x, double y, double z) const;
 
 %typemap(in) noise::uint8 = unsigned int;
 
+namespace noise
+{
+
+  namespace utils
+  {
 class Color {
   public:
     Color(noise::uint8 r, noise::uint8 g, noise::uint8 b, noise::uint8 a);
@@ -808,3 +813,5 @@ class WriterBMP {
     void SetSourceImage(Image &sourceImage);
     void WriteDestFile();
 };
+}
+}
