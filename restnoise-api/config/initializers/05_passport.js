@@ -1,11 +1,9 @@
 var passport = require('passport')
   ,BasicStrategy = require('passport-http').BasicStrategy
-  ,User = require('../../app/models/user.js');
+  ,User = require('../../app/models/user.js')
+  ,config = require("config");
 
-var validUsers = {
-  "fboes" : "blergl",
-  "msaeger" : "furgl"
-}
+var validUsers = config.get("httpserver.authusers");
 
 module.exports = function() {
 

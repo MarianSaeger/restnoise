@@ -1,9 +1,11 @@
 'use strict';
 var mongoose = require('mongoose');
+var config = require('config');
 
 module.exports = function () {
-    mongoose.connect('mongodb://' + global.SETTINGS.mongodbhost + '/' + global.SETTINGS.mongodbdatabase, {
-        replset: {rs_name: global.SETTINGS.mongodbreplset }
+
+    mongoose.connect('mongodb://' + config.get("mongodb.host") + '/' + config.get("mongodb.database"), {
+        replset: {rs_name: config.get("mongodb.replset") }
     });
 
 };
