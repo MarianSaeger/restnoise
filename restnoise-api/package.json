@@ -20,7 +20,8 @@
     "supertest": "^0.13.0",
     "winston": "0.7.*",
     "passport":"0.2.x",
-    "passport-http":"0.2.x"
+    "passport-http":"0.2.x",
+    "gm":"1.17.*"
   },
   "devDependencies": {
     "mocha": "1.15.x",
