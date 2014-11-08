@@ -8,11 +8,27 @@ var RenderInterface = require('../modules/renderinterface.js');
 
 var networksController = new Controller();
 
+function randomHash(count) {
+    if (count === 1)
+        return parseInt(16*Math.random(), 10).toString(16);
+    else {
+        var hash = '';
+        for (var i=0; i<count; i++)
+            hash += randomHash(1);
+        return hash;
+    }
+}
+
+
 networksController.create = function() {
     var self = this;
 
+  var networkdata = self.req.body;
+  if ( ! networkdata.name ) {
+      networkdata.name = "network_"+randomHash(4);
+  }
 
-  var network = new Network( self.req.body );
+  var network = new Network( networkdata );
   var self = this;
   network.save( function( err ) {
     if ( err ) {
