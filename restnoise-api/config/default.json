@@ -4,6 +4,17 @@
         "listenip" : "0.0.0.0",
         "authusers" : {
             "blergl" : "foo"
+        },
+        "ratelimit" : {
+            "whitelist" : ["127.0.0.1"],
+            "blacklist" : [],
+            "end" : true,
+            "categories" : {
+                "normal" : {
+                    "totalRequests" : 60,
+                    "every" : 60000
+                }
+            }
         }
     },
     "mongodb" : {

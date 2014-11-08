@@ -22,7 +22,8 @@
     "passport":"0.2.x",
     "passport-http":"0.2.x",
     "gm":"1.17.*",
-    "config": "1.7.*"
+    "config": "1.7.*",
+    "connect-ratelimit":"0.0.7"
   },
   "devDependencies": {
     "mocha": "1.15.x",
