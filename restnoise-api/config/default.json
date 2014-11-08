@@ -1,0 +1,14 @@
+{
+    "httpserver" : {
+        "listenport" : 3001,
+        "listenip" : "0.0.0.0",
+        "authusers" : {
+            "blergl" : "foo"
+        }
+    },
+    "mongodb" : {
+        "host": "localhost",
+        "database": "restnoise",
+        "replset": ""
+    }
+}
