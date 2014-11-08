@@ -1,0 +1,26 @@
+pynoise - a python wrapper for libnoise
+---------------------------------------------------
+
+Requirements
+---------------
+
+  swig      - http://www.swig.org
+  libnoise  - http://libnoise.sf.net
+
+
+Building
+---------------
+
+Execute:
+
+  $ make
+
+To install become root and run:
+
+  $ make install
+
+The files noiseutils.cpp and noiseutils.h are from the libnoise website. They 
+are included with this project for ease of install. If you wish to use newer 
+versions of these files, simply copy them over files in this directory.
+
+
