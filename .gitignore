@@ -2,3 +2,15 @@ restnoise-api/node_modules/*
 .idea/*
 **/*.bmp.conf
 rendernoise/network.conf
+
+pynoise/_libnoise.so
+
+pynoise/libnoise_wrap.cxx
+
+pynoise/libnoise_wrap.o
+
+pynoise/libnoise.py
+
+pynoise/noiseutils.o
+
+pynoise/libnoise_wrap.cxx.debian
