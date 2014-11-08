@@ -87,7 +87,7 @@ function renderNetwork( network, rendermodulename, maptype, substitutevariables,
 
     fs.writeFileSync("./"+rndfilename+".conf", JSON.stringify( modules ) );
 
-    var child = exec('python /Users/msaeger/projects/mercurial/noise-server/server.py --network ./'+rndfilename+'.conf', function( error, stdout, stderr)
+    var child = exec('python ../rendernoise/rendernoise.py --network ./'+rndfilename+'.conf', function( error, stdout, stderr)
     {
         if ( error != null ) {
 
