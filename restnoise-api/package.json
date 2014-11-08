@@ -21,7 +21,8 @@
     "winston": "0.7.*",
     "passport":"0.2.x",
     "passport-http":"0.2.x",
-    "gm":"1.17.*"
+    "gm":"1.17.*",
+    "config": "1.7.*"
   },
   "devDependencies": {
     "mocha": "1.15.x",
