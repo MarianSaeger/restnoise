@@ -1,2 +1,4 @@
 restnoise-api/node_modules/*
 .idea/*
+**/*.bmp.conf
+rendernoise/network.conf
