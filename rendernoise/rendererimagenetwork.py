@@ -13,7 +13,7 @@ class RendererImageNetwork:
 		self.renderer = RendererImage()
 		self.renderer.SetDestImage(self.image)
 		self.renderer.ClearGradient()
-		self.renderer.EnableLight()
+
 		
 		self.writer = WriterBMP()
 		self.writer.SetSourceImage(self.image)
@@ -49,6 +49,9 @@ class RendererImageNetwork:
 												
 	def SetLightAzimuth(self, value ):
 		self.renderer.SetLightAzimuth(value)
+
+	def EnableLight(self,value):
+	    self.renderer.EnableLight(value)
 		
 	def AddGradientPoint(self, v, r, g, b, a ):
 		print "AddGradientPoint",v,r,g,b,a

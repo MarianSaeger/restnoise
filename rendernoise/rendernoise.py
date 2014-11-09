@@ -44,7 +44,9 @@ special_setters = [
  "Bounds",
  "DestSize",
  "GradientPoints",
- "ControlPoints"
+ "ControlPoints",
+ "Angles",
+ "EnableLight"
 ]
 
 
@@ -62,7 +64,10 @@ def addtonetwork(id,data):
 	
 	if data["type"] == "RendererImageNetwork":
 		mod = RendererImageNetwork()
-		
+
+	if not mod:
+	    print "I do not know",data["type"]
+
 	for key,value in data.items():
 		# just treat generic setters
 		if key in special_setters:
@@ -78,6 +83,8 @@ def addtonetwork(id,data):
 					mod.SetSourceModule( build_network[value] )
 			elif key == "Bounds":
 				mod.SetBounds(*value)
+			elif key == "Angles":
+				mod.SetAngles(*value)
 			elif key == "DestSize":
 				mod.SetDestSize(*value)		
 			elif key == "DestNoiseMap":
@@ -98,7 +105,9 @@ def addtonetwork(id,data):
 			elif key == "ControlPoints":
 				for gp in value:
 
-					mod.AddControlPoint( *gp )					
+					mod.AddControlPoint( *gp )
+			elif key == "EnableLight":
+			    mod.EnableLight(value)
 			continue
 			
 		settermethod = getattr( mod, "Set"+key, None )
