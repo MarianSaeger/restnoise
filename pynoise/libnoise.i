@@ -35,7 +35,6 @@
 
 %typemap(in) noise::NoiseQuality = unsigned int;
 
-
 %exception {
 	try {
 		$action
