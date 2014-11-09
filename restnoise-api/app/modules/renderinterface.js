@@ -19,6 +19,14 @@ var Gradients = {
       [1,255,255,255,255]
     ],
 
+    jade : [
+        [ -1.000,  24, 146, 102, 255 ],
+        [  0.000,  78, 154, 115, 255 ],
+        [  0.250, 128, 204, 165, 255 ],
+        [  0.375,  78, 154, 115, 255 ],
+        [  1.000,  29, 135, 102, 255 ]
+    ],
+
     realistic: [
 
         [-16384.0 , 0, 0, 0, 255],
@@ -117,10 +125,11 @@ function attachRenderNodes( modules, rendermodulename, fancyGradientPoints, mapt
 
     // Attach render structure
     modules["renderer"] = {
-        "LightContrast" : 1.0/345600,
-        "LightIntensity" : 2.0,
-        "LightElev":45.0,
-        "LightAzimuth":135.0,
+        "LightContrast" : "var:LightIntensity,0.000002894",
+        "LightIntensity" : "var:LightIntensity,2.0",
+        "LightElev":"var:LightElev,45.0",
+        "LightAzimuth":"var:LightAzimuth,135.0",
+        "EnableLight" : "var:EnableLight,true",
         "GradientPoints" : fancyGradientPoints,
         "DestFilename" : "var:tmpfile",
         "SourceNoiseMap" : "heightMap",
