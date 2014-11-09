@@ -21,5 +21,18 @@
         "host": "localhost",
         "database": "restnoise",
         "replset": ""
+    },
+    "restnoise" : {
+        "modulelimit" : 100,
+        "moduletypes" : {
+            "Perlin" : {
+                "Seed" : 1,
+                "Frequency" : 2.2,
+                "Persistence" : 0.5,
+                "Lacunarity" : 1.8,
+                "OctaveCount" : 14,
+                "NoiseQuality" : 2
+            }
+        }
     }
 }
