@@ -43,8 +43,7 @@
 		size_t size;
 		size = backtrace(array,20);
 		backtrace_symbols_fd(array,size, STDERR_FILENO);
-		printf("foooooo");
-		
+
 		PyErr_SetString(PyExc_IndexError,"sth going wrong!");
 		return NULL;
 	}
