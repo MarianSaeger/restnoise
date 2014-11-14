@@ -69,6 +69,509 @@ namespace noise {
 		virtual void SetSourceModule (int index, const Module& sourceModule);
     };
 
+        class Abs: public Module
+        {
+          public:
+            Abs ();
+            virtual int GetSourceModuleCount () const;
+            virtual double GetValue (double x, double y, double z) const;
+        };
+
+            class Invert: public Module
+            {
+              public:
+                Invert ();
+                virtual int GetSourceModuleCount () const;
+                virtual double GetValue (double x, double y, double z) const;
+            };
+
+                class Power: public Module
+                {
+                  public:
+                    Power ();
+                    virtual int GetSourceModuleCount () const;
+                    virtual double GetValue (double x, double y, double z) const;
+                };
+
+                    class Checkerboard: public Module
+                    {
+                      public:
+                        Checkerboard ();
+                        virtual int GetSourceModuleCount () const;
+                        virtual double GetValue (double x, double y, double z) const;
+                    };
+
+                        class Spheres: public Module
+                        {
+                          public:
+                            Spheres ();
+                            double GetFrequency () const;
+                            virtual int GetSourceModuleCount () const;
+                            virtual double GetValue (double x, double y, double z) const;
+                            void SetFrequency (double frequency);
+                          protected:
+                            double m_frequency;
+                        };
+
+                           class ScalePoint: public Module
+                            {
+
+                              public:
+
+                                /// Constructor.
+                                ///
+                                /// The default scaling factor applied to the @a x coordinate is set
+                                /// to noise::module::DEFAULT_SCALE_POINT_X.
+                                ///
+                                /// The default scaling factor applied to the @a y coordinate is set
+                                /// to noise::module::DEFAULT_SCALE_POINT_Y.
+                                ///
+                                /// The default scaling factor applied to the @a z coordinate is set
+                                /// to noise::module::DEFAULT_SCALE_POINT_Z.
+                                ScalePoint ();
+
+                                virtual int GetSourceModuleCount () const
+                                {
+                                  return 1;
+                                }
+
+                                virtual double GetValue (double x, double y, double z) const;
+
+                                /// Returns the scaling factor applied to the @a x coordinate of the
+                                /// input value.
+                                ///
+                                /// @returns The scaling factor applied to the @a x coordinate.
+                                double GetXScale () const
+                                {
+                                  return m_xScale;
+                                }
+
+                                /// Returns the scaling factor applied to the @a y coordinate of the
+                                /// input value.
+                                ///
+                                /// @returns The scaling factor applied to the @a y coordinate.
+                                double GetYScale () const
+                                {
+                                  return m_yScale;
+                                }
+
+                                /// Returns the scaling factor applied to the @a z coordinate of the
+                                /// input value.
+                                ///
+                                /// @returns The scaling factor applied to the @a z coordinate.
+                                double GetZScale () const
+                                {
+                                  return m_zScale;
+                                }
+
+                                /// Sets the scaling factor to apply to the input value.
+                                ///
+                                /// @param scale The scaling factor to apply.
+                                ///
+                                /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+                                /// coordinates of the input value with a scaling factor before
+                                /// returning the output value from the source module.
+                                void SetScale (double scale)
+                                {
+                                  m_xScale = scale;
+                                  m_yScale = scale;
+                                  m_zScale = scale;
+                                }
+
+                                /// Sets the scaling factor to apply to the ( @a x, @a y, @a z )
+                                /// coordinates of the input value.
+                                ///
+                                /// @param xScale The scaling factor to apply to the @a x coordinate.
+                                /// @param yScale The scaling factor to apply to the @a y coordinate.
+                                /// @param zScale The scaling factor to apply to the @a z coordinate.
+                                ///
+                                /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+                                /// coordinates of the input value with a scaling factor before
+                                /// returning the output value from the source module.
+                                void SetScale (double xScale, double yScale, double zScale)
+                                {
+                                  m_xScale = xScale;
+                                  m_yScale = yScale;
+                                  m_zScale = zScale;
+                                }
+
+                                /// Sets the scaling factor to apply to the @a x coordinate of the
+                                /// input value.
+                                ///
+                                /// @param xScale The scaling factor to apply to the @a x coordinate.
+                                ///
+                                /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+                                /// coordinates of the input value with a scaling factor before
+                                /// returning the output value from the source module.
+                                void SetXScale (double xScale)
+                                {
+                                  m_xScale = xScale;
+                                }
+
+                                /// Sets the scaling factor to apply to the @a y coordinate of the
+                                /// input value.
+                                ///
+                                /// @param yScale The scaling factor to apply to the @a y coordinate.
+                                ///
+                                /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+                                /// coordinates of the input value with a scaling factor before
+                                /// returning the output value from the source module.
+                                void SetYScale (double yScale)
+                                {
+                                  m_yScale = yScale;
+                                }
+
+                                /// Sets the scaling factor to apply to the @a z coordinate of the
+                                /// input value.
+                                ///
+                                /// @param zScale The scaling factor to apply to the @a z coordinate.
+                                ///
+                                /// The GetValue() method multiplies the ( @a x, @a y, @a z )
+                                /// coordinates of the input value with a scaling factor before
+                                /// returning the output value from the source module.
+                                void SetZScale (double zScale)
+                                {
+                                  m_zScale = zScale;
+                                }
+
+                              protected:
+
+                                /// Scaling factor applied to the @a x coordinate of the input value.
+                                double m_xScale;
+
+                                /// Scaling factor applied to the @a y coordinate of the input value.
+                                double m_yScale;
+
+                                /// Scaling factor applied to the @a z coordinate of the input value.
+                                double m_zScale;
+
+                            };
+
+                                class TranslatePoint: public Module
+                                {
+
+                                  public:
+
+                                    /// Constructor.
+                                    ///
+                                    /// The default translation amount to apply to the @a x coordinate is
+                                    /// set to noise::module::DEFAULT_TRANSLATE_POINT_X.
+                                    ///
+                                    /// The default translation amount to apply to the @a y coordinate is
+                                    /// set to noise::module::DEFAULT_TRANSLATE_POINT_Y.
+                                    ///
+                                    /// The default translation amount to apply to the @a z coordinate is
+                                    /// set to noise::module::DEFAULT_TRANSLATE_POINT_Z.
+                                    TranslatePoint ();
+
+                                    virtual int GetSourceModuleCount () const
+                                    {
+                                      return 1;
+                                    }
+
+                                    virtual double GetValue (double x, double y, double z) const;
+
+                                    /// Returns the translation amount to apply to the @a x coordinate of
+                                    /// the input value.
+                                    ///
+                                    /// @returns The translation amount to apply to the @a x coordinate.
+                                    double GetXTranslation () const
+                                    {
+                                      return m_xTranslation;
+                                    }
+
+                                    /// Returns the translation amount to apply to the @a y coordinate of
+                                    /// the input value.
+                                    ///
+                                    /// @returns The translation amount to apply to the @a y coordinate.
+                                    double GetYTranslation () const
+                                    {
+                                      return m_yTranslation;
+                                    }
+
+                                    /// Returns the translation amount to apply to the @a z coordinate of
+                                    /// the input value.
+                                    ///
+                                    /// @returns The translation amount to apply to the @a z coordinate.
+                                    double GetZTranslation () const
+                                    {
+                                      return m_zTranslation;
+                                    }
+
+                                    /// Sets the translation amount to apply to the input value.
+                                    ///
+                                    /// @param translation The translation amount to apply.
+                                    ///
+                                    /// The GetValue() method moves the ( @a x, @a y, @a z ) coordinates
+                                    /// of the input value by a translation amount before returning the
+                                    /// output value from the source module
+                                    void SetTranslation (double translation)
+                                    {
+                                      m_xTranslation = translation;
+                                      m_yTranslation = translation;
+                                      m_zTranslation = translation;
+                                    }
+
+                                    /// Sets the translation amounts to apply to the ( @a x, @a y, @a z )
+                                    /// coordinates of the input value.
+                                    ///
+                                    /// @param xTranslation The translation amount to apply to the @a x
+                                    /// coordinate.
+                                    /// @param yTranslation The translation amount to apply to the @a y
+                                    /// coordinate.
+                                    /// @param zTranslation The translation amount to apply to the @a z
+                                    /// coordinate.
+                                    ///
+                                    /// The GetValue() method moves the ( @a x, @a y, @a z ) coordinates
+                                    /// of the input value by a translation amount before returning the
+                                    /// output value from the source module
+                                    void SetTranslation (double xTranslation, double yTranslation,
+                                      double zTranslation)
+                                    {
+                                      m_xTranslation = xTranslation;
+                                      m_yTranslation = yTranslation;
+                                      m_zTranslation = zTranslation;
+                                    }
+
+                                    /// Sets the translation amount to apply to the @a x coordinate of the
+                                    /// input value.
+                                    ///
+                                    /// @param xTranslation The translation amount to apply to the @a x
+                                    /// coordinate.
+                                    ///
+                                    /// The GetValue() method moves the ( @a x, @a y, @a z ) coordinates
+                                    /// of the input value by a translation amount before returning the
+                                    /// output value from the source module
+                                    void SetXTranslation (double xTranslation)
+                                    {
+                                      m_xTranslation = xTranslation;
+                                    }
+
+                                    /// Sets the translation amount to apply to the @a y coordinate of the
+                                    /// input value.
+                                    ///
+                                    /// @param yTranslation The translation amount to apply to the @a y
+                                    /// coordinate.
+                                    ///
+                                    /// The GetValue() method moves the ( @a x, @a y, @a z ) coordinates
+                                    /// of the input value by a translation amount before returning the
+                                    /// output value from the source module
+                                    void SetYTranslation (double yTranslation)
+                                    {
+                                      m_yTranslation = yTranslation;
+                                    }
+
+                                    /// Sets the translation amount to apply to the @a z coordinate of the
+                                    /// input value.
+                                    ///
+                                    /// @param zTranslation The translation amount to apply to the @a z
+                                    /// coordinate.
+                                    ///
+                                    /// The GetValue() method moves the ( @a x, @a y, @a z ) coordinates
+                                    /// of the input value by a translation amount before returning the
+                                    /// output value from the source module
+                                    void SetZTranslation (double zTranslation)
+                                    {
+                                      m_zTranslation = zTranslation;
+                                    }
+
+                                  protected:
+
+                                    /// Translation amount applied to the @a x coordinate of the input
+                                    /// value.
+                                    double m_xTranslation;
+
+                                    /// Translation amount applied to the @a y coordinate of the input
+                                    /// value.
+                                    double m_yTranslation;
+
+                                    /// Translation amount applied to the @a z coordinate of the input
+                                    /// value.
+                                    double m_zTranslation;
+
+                                };
+
+                                    class Displace: public Module
+                                    {
+
+                                      public:
+
+                                      /// Constructor.
+                                      Displace ();
+
+                                      virtual int GetSourceModuleCount () const
+                                      {
+                                        return 4;
+                                      }
+
+                                      virtual double GetValue (double x, double y, double z) const;
+
+                                      /// Returns the @a x displacement module.
+                                      ///
+                                      /// @returns A reference to the @a x displacement module.
+                                      ///
+                                      /// @pre This displacement module has been added to this noise module
+                                      /// via a call to SetSourceModule() or SetXDisplaceModule().
+                                      ///
+                                      /// @throw noise::ExceptionNoModule See the preconditions for more
+                                      /// information.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a x coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      const Module& GetXDisplaceModule () const
+                                      {
+                                        if (m_pSourceModule == NULL || m_pSourceModule[1] == NULL) {
+                                          throw noise::ExceptionNoModule ();
+                                        }
+                                        return *(m_pSourceModule[1]);
+                                      }
+
+                                      /// Returns the @a y displacement module.
+                                      ///
+                                      /// @returns A reference to the @a y displacement module.
+                                      ///
+                                      /// @pre This displacement module has been added to this noise module
+                                      /// via a call to SetSourceModule() or SetYDisplaceModule().
+                                      ///
+                                      /// @throw noise::ExceptionNoModule See the preconditions for more
+                                      /// information.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a y coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      const Module& GetYDisplaceModule () const
+                                      {
+                                        if (m_pSourceModule == NULL || m_pSourceModule[2] == NULL) {
+                                          throw noise::ExceptionNoModule ();
+                                        }
+                                        return *(m_pSourceModule[2]);
+                                      }
+
+                                      /// Returns the @a z displacement module.
+                                      ///
+                                      /// @returns A reference to the @a z displacement module.
+                                      ///
+                                      /// @pre This displacement module has been added to this noise module
+                                      /// via a call to SetSourceModule() or SetZDisplaceModule().
+                                      ///
+                                      /// @throw noise::ExceptionNoModule See the preconditions for more
+                                      /// information.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a z coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      const Module& GetZDisplaceModule () const
+                                      {
+                                        if (m_pSourceModule == NULL || m_pSourceModule[3] == NULL) {
+                                          throw noise::ExceptionNoModule ();
+                                        }
+                                        return *(m_pSourceModule[3]);
+                                      }
+
+                                      /// Sets the @a x, @a y, and @a z displacement modules.
+                                      ///
+                                      /// @param xDisplaceModule Displacement module that displaces the @a x
+                                      /// coordinate of the input value.
+                                      /// @param yDisplaceModule Displacement module that displaces the @a y
+                                      /// coordinate of the input value.
+                                      /// @param zDisplaceModule Displacement module that displaces the @a z
+                                      /// coordinate of the input value.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from each of the displacement modules to the corresponding
+                                      /// coordinates of the input value before returning the output value
+                                      /// from the source module.
+                                      ///
+                                      /// This method assigns an index value of 1 to the @a x displacement
+                                      /// module, an index value of 2 to the @a y displacement module, and an
+                                      /// index value of 3 to the @a z displacement module.
+                                      ///
+                                      /// These displacement modules must exist throughout the lifetime of
+                                      /// this noise module unless another displacement module replaces it.
+                                      void SetDisplaceModules (const Module& xDisplaceModule,
+                                        const Module& yDisplaceModule, const Module& zDisplaceModule)
+                                      {
+                                        SetXDisplaceModule (xDisplaceModule);
+                                        SetYDisplaceModule (yDisplaceModule);
+                                        SetZDisplaceModule (zDisplaceModule);
+                                      }
+
+                                      /// Sets the @a x displacement module.
+                                      ///
+                                      /// @param xDisplaceModule Displacement module that displaces the @a x
+                                      /// coordinate.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a x coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      ///
+                                      /// This method assigns an index value of 1 to the @a x displacement
+                                      /// module.  Passing this displacement module to this method produces
+                                      /// the same results as passing this displacement module to the
+                                      /// SetSourceModule() method while assigning it an index value of 1.
+                                      ///
+                                      /// This displacement module must exist throughout the lifetime of this
+                                      /// noise module unless another displacement module replaces it.
+                                      void SetXDisplaceModule (const Module& xDisplaceModule)
+                                      {
+                                        assert (m_pSourceModule != NULL);
+                                        m_pSourceModule[1] = &xDisplaceModule;
+                                      }
+
+                                      /// Sets the @a y displacement module.
+                                      ///
+                                      /// @param yDisplaceModule Displacement module that displaces the @a y
+                                      /// coordinate.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a y coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      ///
+                                      /// This method assigns an index value of 2 to the @a y displacement
+                                      /// module.  Passing this displacement module to this method produces
+                                      /// the same results as passing this displacement module to the
+                                      /// SetSourceModule() method while assigning it an index value of 2.
+                                      ///
+                                      /// This displacement module must exist throughout the lifetime of this
+                                      /// noise module unless another displacement module replaces it.
+                                      void SetYDisplaceModule (const Module& yDisplaceModule)
+                                      {
+                                        assert (m_pSourceModule != NULL);
+                                        m_pSourceModule[2] = &yDisplaceModule;
+                                      }
+
+                                      /// Sets the @a z displacement module.
+                                      ///
+                                      /// @param zDisplaceModule Displacement module that displaces the @a z
+                                      /// coordinate.
+                                      ///
+                                      /// The GetValue() method displaces the input value by adding the output
+                                      /// value from this displacement module to the @a z coordinate of the
+                                      /// input value before returning the output value from the source
+                                      /// module.
+                                      ///
+                                      /// This method assigns an index value of 3 to the @a z displacement
+                                      /// module.  Passing this displacement module to this method produces
+                                      /// the same results as passing this displacement module to the
+                                      /// SetSourceModule() method while assigning it an index value of 3.
+                                      ///
+                                      /// This displacement module must exist throughout the lifetime of this
+                                      /// noise module unless another displacement module replaces it.
+                                      void SetZDisplaceModule (const Module& zDisplaceModule)
+                                      {
+                                        assert (m_pSourceModule != NULL);
+                                        m_pSourceModule[3] = &zDisplaceModule;
+                                      }
+
+                                    };
+
+
     class Perlin: public Module {
       public:
         Perlin();
