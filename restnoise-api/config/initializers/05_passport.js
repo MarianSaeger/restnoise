@@ -1,11 +1,14 @@
 var passport = require('passport')
   ,BasicStrategy = require('passport-http').BasicStrategy
   ,User = require('../../app/models/user.js')
-  ,config = require("config");
+  ,config = require("config")
+  ,winston = require("winston");
 
-var validUsers = config.get("httpserver.authusers");
+var validUsers = config.get("passport.authusers");
 
 module.exports = function() {
+    winston.info("Initializing Passport");
+    winston.info("Passport settings:",config.get("passport"));
 
   this.use(passport.initialize());
 
@@ -33,6 +36,8 @@ module.exports = function() {
       */
     }
   ));
+
+    winston.info("Initialized Passport");
 
   //this.get('*', passport.authenticate('basic', { session : false }) );
   //this.all( passport.authenticate('basic', { session : false }) );

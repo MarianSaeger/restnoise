@@ -1,11 +1,14 @@
 'use strict';
-var mongoose = require('mongoose');
-var config = require('config');
+var mongoose = require('mongoose')
+   ,config = require('config')
+   ,winston = require('winston');
+
 
 module.exports = function () {
-
-    mongoose.connect('mongodb://' + config.get("mongodb.host") + '/' + config.get("mongodb.database"), {
-        replset: {rs_name: config.get("mongodb.replset") }
+    winston.info("Initializing Mongoose");
+    winston.info("Mongoose settings:",config.get("mongoose"));
+    mongoose.connect('mongodb://' + config.get("mongoose.host") + '/' + config.get("mongoose.database"), {
+        replset: {rs_name: config.get("mongoose.replset") }
     });
-
+    winston.info("Initialized Mongoose");
 };

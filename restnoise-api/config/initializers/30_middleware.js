@@ -2,6 +2,7 @@
 var express = require('express');
 var poweredBy = require('connect-powered-by');
 var sass = require('node-sass');
+var winston = require("winston");
 
 module.exports = function() {
   // Use middleware.  Standard [Connect](http://www.senchalabs.org/connect/)
