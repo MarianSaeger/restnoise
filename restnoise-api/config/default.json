@@ -1,37 +1,197 @@
 {
     "httpserver" : {
         "listenport" : 3001,
-        "listenip" : "0.0.0.0",
-        "authusers" : {
-            "blergl" : "foo"
-        },
-        "ratelimit" : {
-            "whitelist" : ["127.0.0.1"],
-            "blacklist" : [],
-            "end" : true,
-            "categories" : {
-                "normal" : {
-                    "totalRequests" : 60,
-                    "every" : 60000
-                }
-            }
-        }
+        "listenip" : "0.0.0.0"
     },
-    "mongodb" : {
+    "mongoose" : {
         "host": "localhost",
         "database": "restnoise",
         "replset": ""
     },
+    "passport" : {
+        "authusers" : {
+            "blergl" : "foo"
+        }
+    },
+    "ratelimit" : {
+        "whitelist" : ["127.0.0.1"],
+        "blacklist" : [],
+        "end" : true,
+        "categories" : {
+            "normal" : {
+                "totalRequests" : 60,
+                "every" : 60000
+            }
+        }
+    },
     "restnoise" : {
         "modulelimit" : 100,
         "moduletypes" : {
-            "Perlin" : {
-                "Seed" : 1,
+
+            "Abs" : {
+                "type" : "Abs",
+                "SourceModule" : "SourceModule"
+            },
+            "Clamp" : {
+                "type" : "Clamp",
+                "SourceModule" : "SourceModule",
+                "Bounds" : [ -0.5, 1.5 ]
+            },
+            "Curve" : {
+                "type" : "Curve",
+                "SourceModule" : "SourceModule",
+                "ControlPoints" : [ -0.5, 0.3, 1.1, 2.2 ]
+            },
+            "Exponent" : {
+                "type" : "Exponent",
+                "SourceModule" : "SourceModule",
+                "Exponent" : 1.1
+            },
+            "Invert" : {
+                "type" : "Invert",
+                "SourceModule" : "SourceModule"
+            },
+            "ScaleBias" : {
+                "type" : "ScaleBias",
+                "SourceModule" : "SourceModule",
+                "Bias" : -0.75,
+                "Scale" : 1.1
+            },
+            "Terrace" : {
+                "type" : "Terrace",
+                "SourceModule" : "SourceModule",
+                "ControlPoints" : [ -0.5, 0.25, 0.7, 0.9 ]
+            },
+            "Add" : {
+                "type" : "Add",
+                "SourceModule" : [ "SourceModule",
+                    "OtherSourceModule" ]
+            },
+            "Max" : {
+                "type" : "Max",
+                "SourceModule" : [ "SourceModule",
+                    "OtherSourceModule" ]
+            },
+            "Min" : {
+                "type" : "Min",
+                "SourceModule" : [ "SourceModule",
+                    "OtherSourceModule" ]
+            },
+            "Multiply" : {
+                "type" : "Multiply",
+                "SourceModule" : [ "SourceModule",
+                    "OtherSourceModule" ]
+            },
+            "Power" : {
+                "type" : "Power",
+                "SourceModule" : [ "SourceModule",
+                    "OtherSourceModule" ]
+            },
+            "Billow" : {
+                "type" : "Billow",
+                "Seed" : 123,
                 "Frequency" : 2.2,
                 "Persistence" : 0.5,
                 "Lacunarity" : 1.8,
                 "OctaveCount" : 14,
                 "NoiseQuality" : 2
+            },
+            "Checkerboard" : {
+                "type" : "Checkerboard"
+            },
+            "Const" : {
+                "type" : "Const",
+                "ConstValue" : 0.7
+            },
+            "Cylinders" : {
+                "type" : "Cylinders",
+                "Frequency" : 2.2
+            },
+            "Perlin" : {
+                "type" : "Perlin",
+                "Seed" : 123,
+                "Frequency" : 2.2,
+                "Persistence" : 0.5,
+                "Lacunarity" : 1.8,
+                "OctaveCount" : 14,
+                "NoiseQuality" : 2
+            },
+            "RidgedMulti" : {
+                "type" : "RidgedMulti",
+                "Seed" : 123,
+                "Frequency" : 2.2,
+                "Lacunarity" : 1.8,
+                "OctaveCount" : 14,
+                "NoiseQuality" : 2
+            },
+            "Spheres" : {
+                "type" : "Spheres",
+                "Frequency" : 2.2
+            },
+            "Voronoi" : {
+                "type" : "Voronoi",
+                "Seed" : 123,
+                "Frequency" : 2.2,
+                "Displacement" : 0.5,
+                "EnableDistance" : true
+            },
+            "Blend" : {
+                "type" : "Blend",
+                "SourceModule" : [ "SourceModule", "OtherSourceModule" ],
+                "ControlModule" : "ControlModule"
+            },
+            "Select" : {
+                "type" : "Select",
+                "SourceModule" : [ "SourceModule", "OtherSourceModule" ],
+                "ControlModule" : "ControlModule",
+                "Bounds" : [ 0.2, 0.87 ],
+                "EdgeFalloff" : 0.25
+            },
+            "Cache" : {
+                "type" : "Cache",
+                "SourceModule" : "SourceModule"
+            },
+            "Displace" : {
+                "type" : "Displace",
+                "SourceModule" : "SourceModule",
+                "DisplaceModules" : [ "SourceModuleX",
+                    "SourceModuleY",
+                    "SourceModuleZ" ],
+                "XDisplaceModule" : "SourceModuleX",
+                "YDisplaceModule" : "SourceModuleY",
+                "ZDisplaceModule" : "SourceModuleZ"
+            },
+            "RotatePoint" : {
+                "type" : "RotatePoint",
+                "SourceModule" : "SourceModule",
+                "Angles" : [ 10.0, 25.5, -45.4 ],
+                "XAngle" : 10.0,
+                "YAngle" : 25.5,
+                "ZAngle" : -45.4
+            },
+            "ScalePoint" : {
+                "type" : "ScalePoint",
+                "SourceModule" : "SourceModule",
+                "Scale" : [ 2.0, 3.5, -1.4 ],
+                "XScale" : 2.0,
+                "YScale" : 3.5,
+                "ZScale" : -1.4
+            },
+            "TranslatePoint" : {
+                "type" : "TranslatePoint",
+                "SourceModule" : "SourceModule",
+                "Translation" : [ 2.0, 3.5, -1.4 ],
+                "XTranslation" : 2.0,
+                "YTranslation" : 3.5,
+                "ZTranslation" : -1.4
+            },
+            "Turbulence" : {
+                "type" : "Turbulence",
+                "SourceModule" : "SourceModule",
+                "Frequency" : 2.2,
+                "Power" : 1.3,
+                "Roughness" : 3.3,
+                "Seed" : 133
             }
         }
     }
