@@ -10,62 +10,67 @@ var networksController = new Controller();
 
 function randomHash(count) {
     if (count === 1)
-        return parseInt(16*Math.random(), 10).toString(16);
+        return parseInt(16 * Math.random(), 10).toString(16);
     else {
         var hash = '';
-        for (var i=0; i<count; i++)
+        for (var i = 0; i < count; i++)
             hash += randomHash(1);
         return hash;
     }
 }
 
 
-networksController.create = function() {
+networksController.create = function () {
     var self = this;
 
-  var networkdata = self.req.body;
-  if ( ! networkdata.name ) {
-      networkdata.name = "network_"+randomHash(4);
-  }
-
-  var network = new Network( networkdata );
-  var self = this;
-  network.save( function( err ) {
-    if ( err ) {
-      return self.res.json( { error : "Network could not be created!", msg:err} );
+    var networkdata = self.req.body;
+    if (!networkdata.name) {
+        networkdata.name = "network_" + randomHash(4);
     }
-    return self.res.json( network );
-  });
 
-};
+    var network = new Network(networkdata);
 
-networksController.destroy = function() {
-  var self = this;
-  Network.findOne( { _id : this.params('id') }, function( err, location ) {
-    if ( err ) {
-      return self.res.json( { error : "Network does not exist!", msg:err} );
+    var tarjan_result = network.tarjan();
+
+    if (tarjan_result.length > 0) {
+        return self.res.send(400,{ error: "Loop detected! This is not allowed!", loops: tarjan_result });
     }
-    if ( location ) {
-      location.remove( function( err, location ) {
-        if ( err ) {
-          return self.res.json( { error : "Network could not be removed!", msg:err} );
+    network.save(function (err) {
+        if (err) {
+            return self.res.send(400,{ error: "Network could not be created!", msg: err});
         }
-        return self.res.json( { ok: 1} );
-      });
-    }
-    else {
-      return self.res.json( { error : "Network does not exist!"} );
-    }
-  });
+        return self.res.send(201,network);
+    });
+
 };
 
-networksController.update = function() {
+networksController.destroy = function () {
+    var self = this;
+    Network.findOne({ _id: this.params('id') }, function (err, location) {
+        if (err) {
+            return self.res.send(404,{ error: "Network not found!"});
+        }
+        if (location) {
+            location.remove(function (err, location) {
+                if (err) {
+                    return self.res.send(400,{ error: "Network could not be removed!", msg: err});
+                }
+                return self.res.send(204,{ ok: 1});
+            });
+        }
+        else {
+            return self.res.send(404,{ error: "Network not found!"});
+        }
+    });
+};
+
+networksController.update = function () {
     var self = this;
     var networkid = this.params('id');
 
-    var what = { _id : networkid };
+    var what = { _id: networkid };
     // Does the id contain a :?
-    if ( networkid.indexOf(':') != -1 ) {
+    if (networkid.indexOf(':') != -1) {
         // We do not have a real object id here, but a "search"
         var key = networkid.split(':')[0];
         var value = networkid.split(':')[1];
@@ -74,97 +79,93 @@ networksController.update = function() {
         what[key] = value;
     }
 
-    Network.findOne( what, function( err, network ) {
-        if ( err ) {
-            return self.res.json( { error : "Network does not exist!", msg:err} );
+    Network.findOne(what, function (err, network) {
+        if (err) {
+            return self.res.send(404,{ error: "Network not found!"});
         }
-        if ( network ) {
-            for ( var k in self.req.body ) {
+        if (network) {
+            for (var k in self.req.body) {
                 network.modules[k] = self.req.body[k]
             }
+
+            var tarjan_result = network.tarjan();
+
+            if (tarjan_result.length > 0) {
+                return self.res.send(400,{ error: "Loop detected! This is not allowed!", loops: tarjan_result });
+            }
+
             network.markModified('modules');
 
-            network.save( function( err ) {
-                if ( err ) {
-                    return self.res.json( { error : "Network could not be created!", msg:err} );
+            network.save(function (err) {
+                if (err) {
+                    return self.res.send(400,{ error: "Network could not be updated!", msg: err});
                 }
-                return self.res.json( network );
+                return self.res.send(200,network);
             });
 
         }
         else {
-            return self.res.json( { error : "Network does not exist!"} );
+            return self.res.send(404,{ error: "Network not found!"});
         }
     });
 };
 
 
-networksController.show = function() {
+networksController.show = function () {
 
 
-  var self = this;
-  var networkid = this.params('id');
-  var what = { _id : networkid }
-    var format = this.params('format','json');
-    var gradient = this.params('gradient','default');
-    var gradientscale = this.params('gradientscale',1.0);
+    var self = this;
+    var networkid = this.params('id');
+    var what = { _id: networkid }
+    var format = this.params('format', 'json');
+    var gradient = this.params('gradient', 'default');
+    var gradientscale = this.params('gradientscale', 1.0);
     gradientscale = parseFloat(gradientscale);
     var maptype = this.params('maptype', 'plane') == 'plane' ? "NoiseMapBuilderPlane" : "NoiseMapBuilderSphere";
-  // Does the id contain a :?
-  if ( networkid.indexOf(':') != -1 ) {
-    // We do not have a real object id here, but a "search"
-    var key = networkid.split(':')[0];
-    var value = networkid.split(':')[1];
-    console.log(key, value);
-    what = { };
-    what[key] = value;
-  }
-
-  Network.findOne( what, function( err, network ) {
-    if ( err ) {
-      return self.res.json( { error : "Network could not be read!", msg:err} );
+    // Does the id contain a :?
+    if (networkid.indexOf(':') != -1) {
+        // We do not have a real object id here, but a "search"
+        var key = networkid.split(':')[0];
+        var value = networkid.split(':')[1];
+        console.log(key, value);
+        what = { };
+        what[key] = value;
     }
-    if ( network ) {
-        var rendermodulename = network["defaultoutputmodule"];
 
-
-        if ( format == 'json') {
-            return self.res.json( network );
+    Network.findOne(what, function (err, network) {
+        if (err) {
+            return self.res.send(404,{ error: "Network not found!"});
         }
-        if ( format != 'jpg' ) {
-            return self.res.json( { error : "Format '"+format+"' is not suported. Valid formats are: 'json', 'jpg'" } );
+        if (network) {
+            var rendermodulename = network["defaultoutputmodule"];
+
+            if (format == 'json') {
+                return self.res.json(network);
+            }
+            if (format != 'jpg') {
+                return self.res.send(415,{ error: "Format '" + format + "' is not suported. Valid formats are: 'json', 'jpg'" });
+            }
+
+            RenderInterface.renderNetwork(network, rendermodulename, maptype, self.req.query, RenderInterface.getGradient(gradient), gradientscale,
+                function (result) {
+                    if (result.error) {
+                        return self.res.send(500,result);
+                    }
+
+                    return self.res.sendfile(result);
+                });
+
+        } else {
+            return self.res.send(404,{ error: "Network not found!"});
         }
-
-        RenderInterface.renderNetwork( network, rendermodulename, maptype, self.req.query, RenderInterface.getGradient( gradient ), gradientscale,
-            function( result ) {
-                if ( result.error ) {
-                    return self.res.json( result );
-                }
-
-                return self.res.sendfile( result );
-            });
-
-    } else {
-        return self.res.json({ error: "Network could not be found!"});
-    }
-  });
+    });
 };
 
-networksController.index = function() {
-  var self = this;
-    return self.res.json( {foo:"index"} );
-    /*
+networksController.index = function () {
+    var self = this;
 
-    Network.find( function( err, networks ) {
-    if ( err ) {
-      return self.res.json( { error : "Locations could not be read!", msg:err} );
-    }
-    if ( networks ) {
-      return self.res.json( networks );
-    }
-    return self.res.json( { error : "Locations could not be found!"} );
-  });
-  */
+    return self.res.send(404,{foo:"bar"});
+
 };
 
 
