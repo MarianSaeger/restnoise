@@ -128,7 +128,7 @@ namespace noise {
                                 void SetScale (double xScale, double yScale, double zScale);
                                 void SetXScale (double xScale);
                                 void SetYScale (double yScale);
-                                void SetZScale (double zScale);}
+                                void SetZScale (double zScale);
 
                               protected:
 
