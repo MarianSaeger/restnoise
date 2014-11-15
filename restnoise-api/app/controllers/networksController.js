@@ -74,7 +74,7 @@ networksController.update = function () {
         // We do not have a real object id here, but a "search"
         var key = networkid.split(':')[0];
         var value = networkid.split(':')[1];
-        console.log(key, value);
+
         what = { };
         what[key] = value;
     }
@@ -127,7 +127,6 @@ networksController.show = function () {
         // We do not have a real object id here, but a "search"
         var key = networkid.split(':')[0];
         var value = networkid.split(':')[1];
-        console.log(key, value);
         what = { };
         what[key] = value;
     }

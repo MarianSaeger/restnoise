@@ -75,7 +75,6 @@ function renderNetwork(network, rendermodulename, maptype, substitutevariables, 
     var md5sum = crypto.createHash('md5');
     md5sum.update(nw_stringified);
     var chksum = md5sum.digest('hex');
-    console.log("md5", chksum);
 
     var rndfilename = network["name"] + "_" + chksum + ".bmp";
     substitutevariables["tmpfile"] = "\"" + rndfilename + "\"";
