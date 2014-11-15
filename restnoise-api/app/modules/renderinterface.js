@@ -60,16 +60,26 @@ function randomFileName() {
 
 function renderNetwork(network, rendermodulename, maptype, substitutevariables, gradient, gradientscale, callback) {
 
-    console.log(gradient, gradientscale);
+
 
     for (var idx in gradient) {
         gradient[idx][0] = gradient[idx][0] * gradientscale;
     }
 
-    var rndfilename = network["name"] + "_" + rendermodulename + ".bmp";
-    substitutevariables["tmpfile"] = "\"" + rndfilename + "\"";
+
 
     var modules = attachRenderNodes(network["modules"], rendermodulename, gradient, maptype);
+
+    // Determine hash of network (before substituting variables), maybe we got it already
+    var nw_stringified = JSON.stringify(modules) + JSON.stringify(substitutevariables);
+    var md5sum = crypto.createHash('md5');
+    md5sum.update(nw_stringified);
+    var chksum = md5sum.digest('hex');
+    console.log("md5", chksum);
+
+    var rndfilename = network["name"] + "_" + chksum + ".bmp";
+    substitutevariables["tmpfile"] = "\"" + rndfilename + "\"";
+
     var substitutionresult = substituteVariables(modules, substitutevariables);
 
     modules = substitutionresult.modules;
@@ -79,12 +89,7 @@ function renderNetwork(network, rendermodulename, maptype, substitutevariables, 
         return callback({ error: "Missing vars! The contained vars have no default values and are not declared.", msg: Object.keys(substitutionresult.missingvars)});
     }
 
-    // Determine hash of network, maybe we got it already
-    var nw_stringified = JSON.stringify(modules);
-    var md5sum = crypto.createHash('md5');
-    md5sum.update(nw_stringified);
-    var chksum = md5sum.digest('hex');
-    console.log("md5", chksum);
+
 
     // Check if file exists already
     var target_filename = network["name"] + "_" + chksum + ".jpg";
