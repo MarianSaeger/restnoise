@@ -58,7 +58,7 @@ NetworkSchema.methods.layout = function(callback) {
         console.log(stderr);
         console.log(stdout);
 
-        callback(JSON.parse("{"+stdout+"sth:null}"));
+        callback(JSON.parse("{"+stdout+"\"sth\":null}"));
     });
 
 }
