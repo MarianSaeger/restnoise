@@ -15,7 +15,7 @@ var makeeditor = function(networkid) {
                         modules = result.modules;
 
                         for (var modulename in modules) {
-                            $('#flowchart-demo').append("<div class='window' style='top:" + layoutdata[modulename].y + ";left:" + layoutdata[modulename].x + "' id='module_" + modulename + "'>" + modulename + ":" + modules[modulename].type + "<br /><img src='/networks/"+networkid+"/modules/" + modulename + "?format=jpg&height=128&width=128&EnableLight=false&gradient=jade'/></div>");
+                            $('#flowchart-demo').append("<div class='window' style='top:" + layoutdata[modulename].y + ";left:" + layoutdata[modulename].x + "' id='module_" + modulename + "'>" + modulename + ":" + modules[modulename].type + "<br /><img src='/networks/"+networkid+"/modules/" + modulename + "?format=jpg&height=128&width=128&EnableLight=false&gradient=grayscale'/></div>");
                         }
 
                         var instance = jsPlumb.getInstance({
@@ -58,8 +58,8 @@ var makeeditor = function(networkid) {
                                 paintStyle: {
                                     strokeStyle: "#7AB02C",
                                     fillStyle: "transparent",
-                                    radius: 7,
-                                    lineWidth: 3
+                                    radius: 4,
+                                    lineWidth: 2
                                 },
                                 isSource: true,
                                 connector: [ "Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true } ],
@@ -96,17 +96,22 @@ var makeeditor = function(networkid) {
                             };
                         var _addEndpoints = function (toId) {
 
-                            var sourceUUID = toId + "_output";
-                            instance.addEndpoint("module_" + toId, sourceEndpoint, { anchor: "Continuous", uuid: sourceUUID });
+
 
                             for (var pname in modules[toId]) {
                                 if (pname.match(/Module/gi)) {
                                     if (Array.isArray(modules[toId][pname])) {
-                                        var targetUUID = toId + "_" + pname + "_0";
-                                        instance.addEndpoint("module_" + toId, targetEndpoint, { anchor: "Continuous", uuid: targetUUID });
-                                        var targetUUID = toId + "_" + pname + "_1";
-                                        instance.addEndpoint("module_" + toId, targetEndpoint, { anchor: "Continuous", uuid: targetUUID });
+                                        for ( var idx in modules[toId][pname] ) {
+                                            var sourceUUID = modules[toId][pname][idx] + "_" + toId + "_" + pname;
+                                            instance.addEndpoint("module_" + modules[toId][pname][idx], sourceEndpoint, { anchor: "Continuous", uuid: sourceUUID });
+
+                                            var targetUUID = toId + "_" + pname + "_" + idx;
+                                            instance.addEndpoint("module_" + toId, targetEndpoint, { anchor: "Continuous", uuid: targetUUID });
+                                        }
                                     } else {
+                                        var sourceUUID = modules[toId][pname] + "_" + toId + "_" + pname;
+                                        instance.addEndpoint("module_" + modules[toId][pname], sourceEndpoint, { anchor: "Continuous", uuid: sourceUUID });
+
                                         var targetUUID = toId + "_" + pname;
                                         instance.addEndpoint("module_" + toId, targetEndpoint, { anchor: "Continuous", uuid: targetUUID });
                                     }
@@ -133,10 +138,11 @@ var makeeditor = function(networkid) {
                                 for (var pname in modules[modulename]) {
                                     if (pname.match(/Module/gi)) {
                                         if (Array.isArray(modules[modulename][pname])) {
-                                            instance.connect({uuids: [modules[modulename][pname][0] + "_output", modulename + "_" + pname + "_0"], editable: true});
-                                            instance.connect({uuids: [modules[modulename][pname][1] + "_output", modulename + "_" + pname + "_1"], editable: true});
+                                            for ( var idx in modules[modulename][pname] ) {
+                                                instance.connect({uuids: [modules[modulename][pname][idx] + "_" + modulename + "_" + pname, modulename + "_" + pname + "_" + idx], editable: true});
+                                            }
                                         } else {
-                                            instance.connect({uuids: [modules[modulename][pname] + "_output", modulename + "_" + pname], editable: true});
+                                            instance.connect({uuids: [modules[modulename][pname] + "_" + modulename + "_" + pname, modulename + "_" + pname], editable: true});
                                         }
                                     }
                                 }
