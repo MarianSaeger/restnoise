@@ -25,11 +25,7 @@ var makeeditor = function(networkid) {
                             // case it returns the 'labelText' member that we set on each connection in the 'init' method below.
                             ConnectionOverlays: [
                                 [ "Arrow", { location: 1 } ],
-                                [ "Label", {
-                                    location: 0.1,
-                                    id: "label",
-                                    cssClass: "aLabel"
-                                }]
+                                [ "Label", {} ]
                             ],
                             Container: "flowchart-demo"
                         });
@@ -62,30 +58,21 @@ var makeeditor = function(networkid) {
                                     lineWidth: 2
                                 },
                                 isSource: true,
-                                connector: [ "Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true } ],
+                                connector: [ "Flowchart", { stub: [2, 3], gap: 0, cornerRadius: 2, alwaysRespectStubs: true } ],
                                 connectorStyle: connectorPaintStyle,
                                 hoverPaintStyle: endpointHoverStyle,
                                 connectorHoverStyle: connectorHoverStyle,
-                                dragOptions: {},
-                                overlays: [
-                                    [ "Label", {
-                                        location: [0.5, 1.5],
-                                        label: "",
-                                        cssClass: "endpointSourceLabel"
-                                    } ]
-                                ]
+                                dragOptions: {}
+
                             },
                         // the definition of target endpoints (will appear when the user drags a connection)
                             targetEndpoint = {
                                 endpoint: "Dot",
-                                paintStyle: { fillStyle: "#7AB02C", radius: 11 },
+                                paintStyle: { fillStyle: "#7AB02C", radius: 5 },
                                 hoverPaintStyle: endpointHoverStyle,
                                 maxConnections: -1,
                                 dropOptions: { hoverClass: "hover", activeClass: "active" },
-                                isTarget: true,
-                                overlays: [
-                                    [ "Label", { location: [0.5, -0.5], label: "", cssClass: "endpointTargetLabel" } ]
-                                ]
+                                isTarget: true
                             },
                             init = function (connection) {
                                 connection.getOverlay("label").setLabel(connection.sourceId.substring(15) + "-" + connection.targetId.substring(15));
@@ -139,10 +126,10 @@ var makeeditor = function(networkid) {
                                     if (pname.match(/Module/gi)) {
                                         if (Array.isArray(modules[modulename][pname])) {
                                             for ( var idx in modules[modulename][pname] ) {
-                                                instance.connect({uuids: [modules[modulename][pname][idx] + "_" + modulename + "_" + pname, modulename + "_" + pname + "_" + idx], editable: true});
+                                                instance.connect({uuids: [modules[modulename][pname][idx] + "_" + modulename + "_" + pname, modulename + "_" + pname + "_" + idx], editable: false});
                                             }
                                         } else {
-                                            instance.connect({uuids: [modules[modulename][pname] + "_" + modulename + "_" + pname, modulename + "_" + pname], editable: true});
+                                            instance.connect({uuids: [modules[modulename][pname] + "_" + modulename + "_" + pname, modulename + "_" + pname], editable: false});
                                         }
                                     }
                                 }
