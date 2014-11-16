@@ -110,6 +110,10 @@ networksController.update = function () {
     });
 };
 
+networksController.edit = function() {
+    this.render({ networkid : this.params('id')});
+}
+
 
 networksController.show = function () {
 

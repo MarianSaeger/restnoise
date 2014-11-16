@@ -1,0 +1,13 @@
+html
+    head
+        title= title
+        link(rel="stylesheet", type="text/css", href="/stylesheets/demo.css")
+        script(type="text/javascript", src="/js/jquery/dist/jquery.min.js")
+        script(type="text/javascript", src="/js/jsPlumb/dist/js/dom.jsPlumb-1.7.2-min.js")
+        script(type="text/javascript", src="/js/restnoiseeditor.js")
+        script(type="text/javascript").
+          makeeditor("#{networkid}");
+    body
+        div(id="main")
+            div(class="demo flowchart-demo",id="flowchart-demo")
+

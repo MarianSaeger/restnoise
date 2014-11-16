@@ -187,7 +187,7 @@ function substituteVariables(modules, substitutevariables) {
     try {
         modules = JSON.parse(nw_stringified);
     } catch(err) {
-        return { error : "Could not substitute variables, maybe you have a typo?", msg : err }
+        return { error : "Could not substitute variables, maybe you have a typo?", msg : nw_stringified }
     }
 
     return { modules: modules, missingvars: missingvars };

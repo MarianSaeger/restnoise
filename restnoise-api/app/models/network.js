@@ -1,8 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var exec = require('child_process').exec;
-var fs = require('fs');
+var dagre = require("dagre");
 
 var NetworkSchema = new Schema( {
     name: {type: String, index: {unique: true}, required : true},
@@ -29,37 +28,37 @@ NetworkSchema.methods.layout = function(callback) {
     if ( ! this.modules ) { return []; };
     var network = JSON.parse(JSON.stringify(this.modules));
 
-    var graph = "digraph "+this.name+"{\n";
+    var graph = new dagre.graphlib.Graph();
+    graph.setGraph({});
+    graph.setDefaultEdgeLabel(function() { return {}; });
 
+    for ( var modulename in network ) {
+        graph.setNode(modulename, { label: modulename });
+    }
     for ( var modulename in network ) {
         for ( var pname in network[modulename] ) {
             if ( pname.match(/Module/gi) ) {
                 if ( Array.isArray( network[modulename][pname] ) ) {
                     for ( var idx in network[modulename][pname] ) {
-                        graph = graph + network[modulename][pname][idx] + " -> " + modulename + ";\n"
+                        graph.setEdge( network[modulename][pname][idx], modulename );
                     }
                 } else {
-                    graph = graph + network[modulename][pname] + " -> " + modulename + ";\n"
+                    graph.setEdge( network[modulename][pname], modulename );
                 }
-
             }
         }
     }
 
-    graph = graph + "}"
+    dagre.layout(graph);
 
-    fs.writeFileSync('./' + this.name + '.graph', graph);
-    var execcmd = 'dot -Tdot ./' + this.name + '.graph | grep pos | grep height | sed -e "s|\\s*\\(\\w*\\)\\s*\\[.*pos=\\"\\([0-9]*\\),\\([0-9]*\\)\\".*|\\"\\1\\": \\{\\"x\\":\\2,\\"y\\":\\3\\},|g"';
-    console.log(execcmd);
-    var child = exec(execcmd, function (error, stdout, stderr) {
-        if (error != null) {
 
-        }
-        console.log(stderr);
-        console.log(stdout);
+    var result = {};
 
-        callback(JSON.parse("{"+stdout+"\"sth\":null}"));
+    graph.nodes().forEach( function(v) {
+        result[v] = { x : graph.node(v).x*5, y : graph.node(v).y*5 };
     });
+    callback(result);
+
 
 }
 
