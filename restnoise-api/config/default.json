@@ -19,7 +19,7 @@
         "end" : true,
         "categories" : {
             "normal" : {
-                "totalRequests" : 60,
+                "totalRequests" : 600,
                 "every" : 60000
             }
         }
