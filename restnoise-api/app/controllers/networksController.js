@@ -142,7 +142,10 @@ networksController.show = function () {
                 return self.res.json(network);
             }
             if (format == 'graph') {
-                return self.res.json(network.layout());
+                network.layout(function(result){
+                    return self.res.json(result);
+                });
+
             }
             if (format != 'jpg') {
                 return self.res.send(415,{ error: "Format '" + format + "' is not suported. Valid formats are: 'json', 'jpg'" });

@@ -25,7 +25,7 @@ VertexStack.prototype.contains = function(vertex) {
     return false;
 }
 
-NetworkSchema.methods.layout = function() {
+NetworkSchema.methods.layout = function(callback) {
     if ( ! this.modules ) { return []; };
     var network = JSON.parse(JSON.stringify(this.modules));
 
@@ -49,7 +49,7 @@ NetworkSchema.methods.layout = function() {
     graph = graph + "}"
 
     fs.writeFileSync('./' + this.name + '.graph', graph);
-    var execcmd = 'dot -Tdot ./' + this.name + '.graph | grep pos | grep height | sed -e "s|\\s*\\(\\w*\\)\\s*\\[.*pos=\\"\\([0-9]*\\),\\([0-9]*\\)\\".*|\\"\\1\\": \\{\\"x\\":\\2,\\"y\\":\\3\\}|g"';
+    var execcmd = 'dot -Tdot ./' + this.name + '.graph | grep pos | grep height | sed -e "s|\\s*\\(\\w*\\)\\s*\\[.*pos=\\"\\([0-9]*\\),\\([0-9]*\\)\\".*|\\"\\1\\": \\{\\"x\\":\\2,\\"y\\":\\3\\},|g"';
     console.log(execcmd);
     var child = exec(execcmd, function (error, stdout, stderr) {
         if (error != null) {
@@ -57,6 +57,8 @@ NetworkSchema.methods.layout = function() {
         }
         console.log(stderr);
         console.log(stdout);
+
+        callback(JSON.parse("{"+stdout+"sth:null}"));
     });
 
 }
