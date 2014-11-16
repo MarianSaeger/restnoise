@@ -1,0 +1,38 @@
+{
+  "name": "jsPlumb",
+  "version": "1.7.2",
+  "ignore": [
+    "demo",
+    "dist/apidocs",
+    "dist/demo",
+    "dist/doc",
+    "dist/lib",
+    "dist/tests",
+    "dist/index.html",
+    "doc",
+    "img",
+    "lib",
+    "jekyll",
+    "node_modules",
+    "src",
+    "tests",
+    "Gruntfile.js",
+    "README.md",
+    "changelog.txt",
+    "index.html",
+    "build-support.js",
+    "package.json",
+    "todo.txt"
+  ],
+  "homepage": "https://github.com/sporritt/jsPlumb",
+  "_release": "1.7.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.7.2",
+    "commit": "cc6d8fcc174df99e3a3895bb356107d18d96372b"
+  },
+  "_source": "git://github.com/sporritt/jsPlumb.git",
+  "_target": "~1.7.2",
+  "_originalSource": "jsPlumb",
+  "_direct": true
+}

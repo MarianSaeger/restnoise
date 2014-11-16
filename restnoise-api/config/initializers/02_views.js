@@ -4,7 +4,7 @@ module.exports = function() {
   // Configure view-related settings.  Consult the Express API Reference for a
   // list of the available [settings](http://expressjs.com/api.html#app-settings).
   this.set('views', __dirname + '/../../app/views');
-  // this.set('view engine', 'jade');
+  this.set('view engine', 'jade');
 
   // Register EJS as a template engine.
   // this.engine('jade', require('jade').__express);
