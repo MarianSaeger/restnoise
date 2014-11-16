@@ -81,6 +81,11 @@ function renderNetwork(network, rendermodulename, maptype, substitutevariables, 
 
     var substitutionresult = substituteVariables(modules, substitutevariables);
 
+    if (substitutionresult.error) {
+        return callback(substitutionresult);
+    }
+
+
     modules = substitutionresult.modules;
 
 
@@ -179,9 +184,14 @@ function substituteVariables(modules, substitutevariables) {
     });
 
 
-    modules = JSON.parse(nw_stringified);
+    try {
+        modules = JSON.parse(nw_stringified);
+    } catch(err) {
+        return { error : "Could not substitute variables, maybe you have a typo?", msg : err }
+    }
+
     return { modules: modules, missingvars: missingvars };
-    ;
+
 }
 
 function getGradient(gradientid) {
