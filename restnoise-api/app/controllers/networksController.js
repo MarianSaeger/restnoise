@@ -142,7 +142,7 @@ networksController.show = function () {
                 return self.res.json(network);
             }
             if (format == 'graph') {
-                network.layout(function(result){
+                return network.layout(function(result){
                     return self.res.json(result);
                 });
 
